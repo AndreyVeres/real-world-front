@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ApiService } from "../../core/services/api.service";
-import { API_ROUTES } from "../../api.routes";
+import { ApiService } from "../../shared/services/api.service";
+import { API_ROUTES } from "../../shared/api.routes";
 import { tap } from "rxjs";
 import { Tag } from "./tags.types";
 

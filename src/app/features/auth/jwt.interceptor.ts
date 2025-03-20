@@ -1,6 +1,6 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { TokenService } from './services/token.service';
+import { TokenService } from './model/token.service';
 
 const addAuthHeader = (request: HttpRequest<unknown>, token: string) => {
   return request.clone({
