@@ -28,7 +28,7 @@
               placeholder="Password"
             />
           </fieldset>
-          <button (click)="handleLogin()" type="button" class="btn btn-lg btn-primary pull-xs-right">
+          <button [disabled]="form.invalid || ($isLoading | async)" (click)="handleLogin()" type="button" class="btn btn-lg btn-primary pull-xs-right">
             Sign in
           </button>
         </form>

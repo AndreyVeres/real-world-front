@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../types/user.types';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  private readonly user$ = new BehaviorSubject<User | null>(null);
-
-  get currentUser() {
-    return this.user$.asObservable();
-  }
+export class UserService extends ApiService {
+  user$ = new BehaviorSubject<User | null>(null);
 
   setUser(user: User) {
-    console.log('[set user]', user);
     this.user$.next(user);
   }
 

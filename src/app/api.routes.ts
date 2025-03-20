@@ -1,4 +1,7 @@
 export enum API_ROUTES {
   REGISTER = 'register',
-  LOGIN = 'login'
+  LOGIN = 'login',
+  ME = 'user',
+  REFRESH = 'refresh',
+  TAGS = 'tags'
 }

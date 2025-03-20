@@ -1,16 +1,20 @@
-import { Component, Inject, inject } from '@angular/core';
-import { AuthService } from '../../auth/services/auth.service';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { APP_ROUTES } from '../../shared/app.routes';
+import { UserService } from '../../core/services/user.service';
+import { AuthService } from '../../features/auth/services/auth.service';
 
 @Component({
   selector: '[appHeader]',
-  imports: [AsyncPipe, NgIf , RouterLink],
+  imports: [AsyncPipe, RouterLink],
   standalone: true,
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  isAuth = inject(AuthService).isAuth;
-  route = APP_ROUTES
+  $user = inject(UserService).user$;
+  private readonly authService = inject(AuthService);
+
+  handleLogout() {
+    this.authService.removeSession();
+  }
 }

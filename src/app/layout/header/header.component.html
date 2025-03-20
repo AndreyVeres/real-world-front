@@ -1,19 +1,26 @@
 <nav class="navbar navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="/">conduit</a>
+    <a class="navbar-brand" routerLink="/">conduit</a>
 
-    <div *ngIf="isAuth | async as user">{{ user.email }}</div>
 
     <ul class="nav navbar-nav pull-xs-right">
+
       <li class="nav-item">
-        <a class="nav-link active" [routerLink]="['/']">Home</a>
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      @if(!($user | async); as user){
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">Sign in</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/login']">Sign in</a>
+        <a class="nav-link" routerLink="/register">Sign up</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/register']">Sign up</a>
-      </li>
+    }
+
+    @if($user | async; as user){
+      <button (click)="handleLogout()">Log out</button>
+      <span>{{ user.name }}</span>
+    }
     </ul>
   </div>
 </nav>
