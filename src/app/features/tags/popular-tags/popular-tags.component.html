@@ -1,0 +1,12 @@
+<div class="sidebar">
+  <p>Popular Tags</p>
+
+  @if($popularTags | async; as tags){
+  <div class="tag-list">
+      @for(tag of tags; track tag.id){
+        <a href="" class="tag-pill tag-default">{{ tag.tag }}</a>
+      }
+    </div>
+  }
+</div>
+
