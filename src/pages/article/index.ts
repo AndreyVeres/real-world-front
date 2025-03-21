@@ -1,6 +1,7 @@
-import { ArticleComponent } from '@pages/article/ui/article/article.component';
+import { Route } from '@angular/router';
 
-export const articleRoute = {
+export const articleRoute: Route = {
   path: 'article/:name',
-  component: ArticleComponent,
+  loadComponent: () =>
+    import('./ui/article/article.component').then((c) => c.ArticleComponent),
 };

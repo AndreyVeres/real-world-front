@@ -1,6 +1,6 @@
-import { ProfileComponent } from '@pages/profile/profile.component';
+import { Route } from '@angular/router';
 
-export const profileRoute = {
+export const profileRoute:Route = {
   path: 'profile/:username',
-  component: ProfileComponent,
+  loadComponent: () => import('./profile.component').then(c => c.ProfileComponent)
 };
