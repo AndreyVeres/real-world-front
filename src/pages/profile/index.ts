@@ -1,7 +1,6 @@
-import { ProfileComponent } from "@pages/profile/profile.component";
+import { ProfileComponent } from '@pages/profile/profile.component';
 
 export const profileRoute = {
-  path: 'profile',
+  path: 'profile/:username',
   component: ProfileComponent,
-  //   // canActivate: [authGuard],
 };
