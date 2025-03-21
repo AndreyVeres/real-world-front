@@ -19,12 +19,13 @@
     "module": "ES2022",
     "baseUrl": "./src",
     "paths": {
-      "@shared/*": ["app/shared/*"],
-      "@layout/*": ["app/layout/*"],
-      "@features/*": ["app/features/*"],
-      "@core/*": ["app/core/*"],
-      "@pages/*":["app/pages/*"],
-      "@widgets/*":["app/widgets/*"]
+      "@shared/*": ["shared/*"],
+      "@layout/*": ["layout/*"],
+      "@features/*": ["features/*"],
+      "@pages/*": ["pages/*"],
+      "@widgets/*": ["widgets/*"],
+      "@entities/*": ["entities/*"],
+      "@app/*": ["app/*"]
     }
   },
   "angularCompilerOptions": {

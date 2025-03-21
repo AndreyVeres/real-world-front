@@ -3,12 +3,18 @@ import {
   provideAppInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
-
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { provideRouter, Routes } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { JwtInterceptor } from './features/auth/jwt.interceptor';
-import { appInitializer } from '@features/auth';
+import {  authRoutes, JwtInterceptor } from '@features/auth';
+import { homeRoute } from '@pages/home';
+import { appInitializer } from './app.initializer';
+import { profileRoute } from '@pages/profile';
+
+export const routes: Routes = [
+  profileRoute,
+  homeRoute,
+  ...authRoutes,
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [
