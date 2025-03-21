@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormArray,
   FormControl,
@@ -7,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ArticleService } from '@features/create-article/model/article.service';
-import { CreateArticlePayload } from '@features/create-article/model/create-article.types';
 
 @Component({
   selector: 'app-create-article',
@@ -17,6 +17,7 @@ import { CreateArticlePayload } from '@features/create-article/model/create-arti
 })
 export class CreateArticleComponent {
   private readonly articleService = inject(ArticleService);
+  $destroyRef = inject(DestroyRef);
 
   form = new FormGroup({
     title: new FormControl('', {
@@ -41,8 +42,9 @@ export class CreateArticleComponent {
   handleSubmit() {
     const payload = this.form.getRawValue();
 
-    this.articleService.createArticle(payload).subscribe();
-
-    console.log(payload);
+    this.articleService
+      .createArticle(payload)
+      .pipe(takeUntilDestroyed(this.$destroyRef))
+      .subscribe();
   }
 }
