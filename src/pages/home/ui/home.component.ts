@@ -11,7 +11,6 @@ import { PopularTagsComponent } from '@features/tags';
     ReactiveFormsModule,
     PopularTagsComponent,
     ArticlePreviewComponent,
-    RouterLink,
   ],
   templateUrl: './home.component.html',
 })

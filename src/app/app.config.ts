@@ -10,12 +10,22 @@ import { homeRoute } from '@pages/home';
 import { appInitializer } from './app.initializer';
 import { profileRoute } from '@pages/profile';
 import { articleRoute } from '@pages/article';
+import { EditorComponent } from '@pages/editor/editor/editor.component';
+import { SettingsComponent } from '@pages/settings/ui/settings/settings.component';
 
 export const routes: Routes = [
   profileRoute,
   homeRoute,
   articleRoute,
   ...authRoutes,
+  {
+    path: 'editor',
+    component: EditorComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+  },
 ];
 
 export const appConfig: ApplicationConfig = {

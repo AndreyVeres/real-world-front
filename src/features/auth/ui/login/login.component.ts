@@ -23,7 +23,7 @@ export class LoginComponent {
   private readonly router = inject(Router);
 
   form = new FormGroup({
-    email: new FormControl('qweqwe@mail.com', {
+    email: new FormControl('admin@mail.ru', {
       nonNullable: true,
       validators: Validators.required,
     }),
