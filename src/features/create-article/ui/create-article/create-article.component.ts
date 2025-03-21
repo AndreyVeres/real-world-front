@@ -39,7 +39,7 @@ export class CreateArticleComponent {
   }
 
   handleSubmit() {
-    const payload: CreateArticlePayload = this.form.getRawValue();
+    const payload = this.form.getRawValue();
 
     this.articleService.createArticle(payload).subscribe();
 

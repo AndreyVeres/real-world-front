@@ -7,8 +7,8 @@ import { API_ROUTES } from '@shared/const/api.routes';
   providedIn: 'root',
 })
 export class ArticleService extends ApiService {
-  createArticle(payload: CreateArticlePayload) {
-    return this.post(API_ROUTES.ARTICLE, payload);
+  createArticle(article: CreateArticlePayload) {
+    return this.post(API_ROUTES.ARTICLE, { article });
   }
 
   getAll() {
