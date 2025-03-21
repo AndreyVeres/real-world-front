@@ -3,5 +3,6 @@ export enum API_ROUTES {
   LOGIN = 'login',
   ME = 'users',
   REFRESH = 'refresh',
-  TAGS = 'tags'
+  TAGS = 'tags',
+  ARTICLE = 'articles',
 }
