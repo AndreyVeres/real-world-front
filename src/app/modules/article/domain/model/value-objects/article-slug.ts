@@ -4,16 +4,16 @@ import {
   ValueObject,
 } from '@app/modules/shared/uuid';
 
-export class ArticleTitle extends ValueObject<string> {
+export class ArticleSlug extends ValueObject<string> {
   protected _value: string;
 
-  constructor(articleTitle: string) {
+  public constructor(articleSlug: string) {
     super();
 
-    if (!validateStringNotEmpty(articleTitle)) {
+    if (!validateStringNotEmpty(articleSlug)) {
       throw new EmptyString();
     }
 
-    this._value = articleTitle;
+    this._value = articleSlug;
   }
 }

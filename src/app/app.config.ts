@@ -12,13 +12,7 @@ import { profileRoute } from '@pages/profile';
 import { editorRoute } from '@pages/editor';
 import { settingsRoute } from '@pages/settings';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
-import { articlesReducer } from './modules/article/store/reducers/article.reducer';
-
-import { ArticleEffects } from './modules/article/store/effects/article.effects';
-import { ArticleRepositoryService } from './modules/article/services/article.repository';
-import { ArticleService } from './modules/article/services/article.service';
 import { articleRoutes } from './modules/article';
 
 export const routes: Routes = [
@@ -35,21 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([JwtInterceptor])),
     provideAppInitializer(appInitializer),
-
-    provideStore({
-      articles: articlesReducer,
-    }),
-    provideEffects([ArticleEffects]),
-
-    {
-      provide: ArticleRepositoryService,
-      useClass: ArticleService,
-    },
-
-    // {
-    //   provide:Ng
-    // }
-
+    provideStore(),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

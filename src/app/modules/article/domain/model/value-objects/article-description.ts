@@ -7,7 +7,7 @@ import {
 export class ArticleDescription extends ValueObject<string> {
   protected _value: string;
 
-  constructor(articleDescription: string) {
+  public constructor(articleDescription: string) {
     super();
 
     if (!validateStringNotEmpty(articleDescription)) {
