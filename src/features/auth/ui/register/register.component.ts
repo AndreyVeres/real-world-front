@@ -38,7 +38,9 @@ export class RegisterComponent {
     const registerPayload = this.form.getRawValue();
 
     this.authService
-      .register(registerPayload)
+      .register({
+        user: registerPayload,
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => console.log(res));
   }

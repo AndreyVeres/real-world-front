@@ -5,7 +5,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import {
   LoginPayload,
   RegisterPayload,
-  TokenResponse,
+  UserResponse,
 } from '../model/auth.types';
 import { TokenService } from '../model/token.service';
 import { UserService, User } from '@entities/user';
@@ -19,14 +19,14 @@ export class AuthService extends ApiService {
   $isLogged = new BehaviorSubject(!!this.tokenService.getToken());
 
   register(payload: RegisterPayload) {
-    return this.post<TokenResponse, RegisterPayload>(
+    return this.post<UserResponse, RegisterPayload>(
       API_ROUTES.REGISTER,
       payload
     ).pipe(tap(this.setSession.bind(this)));
   }
 
   login(payload: LoginPayload) {
-    return this.post<TokenResponse, LoginPayload>(
+    return this.post<UserResponse, LoginPayload>(
       API_ROUTES.LOGIN,
       payload
     ).pipe(tap(this.setSession.bind(this)));
@@ -40,8 +40,10 @@ export class AuthService extends ApiService {
     );
   }
 
-  private setSession({ access_token }: TokenResponse) {
-    this.tokenService.saveToken(access_token);
+  private setSession(response: UserResponse) {
+    const token = response.user.token
+    console.log(token)
+    this.tokenService.saveToken(token);
     this.$isLogged.next(true);
   }
 

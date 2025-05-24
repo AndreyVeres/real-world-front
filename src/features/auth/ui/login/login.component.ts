@@ -23,11 +23,11 @@ export class LoginComponent {
   private readonly router = inject(Router);
 
   form = new FormGroup({
-    email: new FormControl('admin@mail.ru', {
+    username: new FormControl('admin', {
       nonNullable: true,
       validators: Validators.required,
     }),
-    password: new FormControl('123123', {
+    password: new FormControl('123', {
       nonNullable: true,
       validators: Validators.required,
     }),
@@ -35,7 +35,9 @@ export class LoginComponent {
 
   handleLogin() {
     this.authService
-      .login(this.form.getRawValue())
+      .login({
+        user: this.form.getRawValue(),
+      })
       .pipe(
         switchMap(() => this.authService.me()),
         takeUntilDestroyed(this.destroyRef)

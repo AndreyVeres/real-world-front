@@ -1,14 +1,25 @@
 export interface RegisterPayload {
-  email: string;
-  password: string;
-  username: string;
+  user: {
+    email: string;
+    password: string;
+    username: string;
+  };
 }
 
 export interface LoginPayload {
-  email: string;
-  password: string;
+  user: {
+    username: string;
+    password: string;
+  };
 }
 
-export interface TokenResponse {
-  access_token: string;
+export interface UserResponse {
+  user: {
+    bio: string;
+    email: string;
+    id: number;
+    image: string;
+    token: string;
+    username: string;
+  };
 }

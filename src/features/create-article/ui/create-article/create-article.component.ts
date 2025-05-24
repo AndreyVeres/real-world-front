@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ArticleService } from '@features/create-article/model/article.service';
+// import { ArticleService } from '@features/create-article/model/article.service';
 
 @Component({
   selector: 'app-create-article',
@@ -16,7 +16,7 @@ import { ArticleService } from '@features/create-article/model/article.service';
   imports: [ReactiveFormsModule],
 })
 export class CreateArticleComponent {
-  private readonly articleService = inject(ArticleService);
+  // private readonly articleService = inject(ArticleService);
   $destroyRef = inject(DestroyRef);
 
   form = new FormGroup({
@@ -36,15 +36,15 @@ export class CreateArticleComponent {
   });
 
   getAll() {
-    return this.articleService.getAll().subscribe();
+    // return this.articleService.getAll().subscribe();
   }
 
   handleSubmit() {
-    const payload = this.form.getRawValue();
+    // const payload = this.form.getRawValue();
 
-    this.articleService
-      .createArticle(payload)
-      .pipe(takeUntilDestroyed(this.$destroyRef))
-      .subscribe();
+    // this.articleService
+    //   .createArticle(payload)
+    //   .pipe(takeUntilDestroyed(this.$destroyRef))
+    //   .subscribe();
   }
 }
