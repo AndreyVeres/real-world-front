@@ -35,6 +35,7 @@ export class LoginComponent {
     this.authFacade.login({
       user: this.form.getRawValue(),
     });
+
     // .pipe(
     //   switchMap(() => this.authService.me()),
     //   takeUntilDestroyed(this.destroyRef)

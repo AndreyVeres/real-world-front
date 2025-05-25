@@ -6,7 +6,6 @@ import {
 import { provideRouter, Routes } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { profileRoute } from '@pages/profile';
-import { editorRoute } from '@pages/editor';
 import { settingsRoute } from '@pages/settings';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideStore } from '@ngrx/store';
@@ -18,7 +17,6 @@ export const routes: Routes = [
   profileRoute,
   ...articleRoutes,
   ...authRoutes,
-  editorRoute,
   settingsRoute,
 ];
 

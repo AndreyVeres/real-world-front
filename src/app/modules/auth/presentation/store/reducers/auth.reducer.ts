@@ -19,6 +19,7 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
   initialState,
   on(AuthPageActions.setUser, (_, payload) => {
+    console.log('dispatch')
     return {
       user: payload.user,
       isLoggedIn: payload.user ? true : false,

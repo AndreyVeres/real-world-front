@@ -13,16 +13,3 @@ export const selectIsLoggedIn = createSelector(
   selectAuthFeatureState,
   (state) => state.isLoggedIn
 );
-
-// export const selectCurrentArticle = createSelector(
-//   selectArticlesFeatureState,
-//   (state) => state.currentArticle
-// );
-// export const selectArticlesLoading = createSelector(
-//   selectArticlesFeatureState,
-//   (state) => state.loadingList || state.loadingSingle
-// );
-// export const selectArticlesError = createSelector(
-//   selectArticlesFeatureState,
-//   (state) => state.error
-// );

@@ -6,6 +6,7 @@ import { RegisterDto } from '../application/dto/register.dto';
 import { API_ROUTES } from '@shared/const/api.routes';
 import { env } from 'env';
 import { UserDto } from '../application/dto/user.dto';
+import { Observable } from 'rxjs';
 
 export interface UserResponse {
   user: {
@@ -34,8 +35,8 @@ export class AuthHttpRepository implements AuthRepository {
     );
   }
 
-  public me() {
-    return this.http.get<UserDto>(env.API_PATH + API_ROUTES.ME);
+  public me(): Observable<{ user: UserDto }> {
+    return this.http.get<{ user: UserDto }>(env.API_PATH + API_ROUTES.ME);
   }
   private readonly http = inject(HttpClient);
 }

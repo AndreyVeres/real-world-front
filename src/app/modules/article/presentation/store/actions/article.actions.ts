@@ -1,3 +1,4 @@
+import { CreateArticleDto } from '@app/modules/article/application/dto/article.dto';
 import { ArticleEntity } from '@app/modules/article/domain/model/article.entity';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
@@ -5,6 +6,7 @@ export const ArticlePageActions = createActionGroup({
   source: 'Article Page',
   events: {
     'Load All Articles': emptyProps(),
+    'Create Article': props<{ articleDto: CreateArticleDto }>(),
   },
 });
 
@@ -13,5 +15,6 @@ export const ArticleApiActions = createActionGroup({
   events: {
     'Load All Articles Success': props<{ articles: ArticleEntity[] }>(),
     'Load All Articles Failure': props<{ error: any }>(),
+    'Create Article Success': props<{ article: ArticleEntity }>(),
   },
 });

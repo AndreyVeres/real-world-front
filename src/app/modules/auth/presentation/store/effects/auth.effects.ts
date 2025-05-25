@@ -1,40 +1,38 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthApiActions, AuthPageActions } from '../actions/auth.actions';
-import { AuthApplicationService } from '@app/modules/auth/application/auth-application.service';
 import { UserEntity } from '@app/modules/auth/domain/model/user.entity';
 import { SessionRepository } from '@app/modules/auth/domain/repository/session.repository';
-import { Action } from '@ngrx/store';
+import { LoginUseCase } from '@app/modules/auth/application/use-cases/login.use-case';
+import { MeUseCase } from '@app/modules/auth/application/use-cases/me.use-case';
 
 @Injectable()
 export class AuthEffects {
-  public constructor(
-    private actions$: Actions,
-    private authAppService: AuthApplicationService,
-    private sessionRepository: SessionRepository
-  ) {}
+  private readonly actions$ = inject(Actions);
+  private readonly loginUseCase = inject(LoginUseCase);
+  private readonly meUseCase = inject(MeUseCase);
+  private readonly sessionRepository = inject(SessionRepository);
 
   public me$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthApiActions.me),
-      mergeMap((data) => {
-        return this.authAppService.me().pipe(
-          tap((res) => console.log(res)),
-          map((response) => {
-            // const userEntity = UserEntity.create(
-            //   String(response.id),
-            //   response.email,
-            //   response.bio,
-            //   response.image,
-            //   response.token,
-            //   response.username
-            // );
-            // this.sessionRepository.saveToken(userEntity.token);
-            // return AuthPageActions.setUser({
-            //   user: userEntity,
-            // });
+      mergeMap(() => {
+        return this.meUseCase.execute().pipe(
+          map(({ user }) => {
+            const userEntity = UserEntity.reconstitute(
+              user.id,
+              user.email,
+              user.bio,
+              user.image,
+              user.token,
+              user.username
+            );
+
+            return AuthPageActions.setUser({
+              user: userEntity,
+            });
           }),
 
           catchError((error) => of(error))
@@ -47,10 +45,10 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthApiActions.login),
       mergeMap((data) => {
-        return this.authAppService.login(data).pipe(
+        return this.loginUseCase.execute(data).pipe(
           map(({ user }) => {
-            const userEntity = UserEntity.create(
-              String(user.id),
+            const userEntity = UserEntity.reconstitute(
+              user.id,
               user.email,
               user.bio,
               user.image,

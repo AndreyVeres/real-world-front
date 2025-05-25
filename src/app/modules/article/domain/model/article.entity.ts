@@ -12,25 +12,21 @@ export class ArticleEntity extends Entity {
   }
 
   public constructor(
-    public id: string,
-    public slug: ArticleSlug,
     public title: ArticleTitle,
     public description: ArticleDescription,
-    public tagList: ArticleTagList
+    public tagList: ArticleTagList,
+    public id?: string,
+    public slug?: ArticleSlug
   ) {
     super();
   }
 
   public static create(
-    id: string,
-    slug: string,
     title: string,
     description: string,
     tagList: string[]
   ): ArticleEntity {
     return new ArticleEntity(
-      id,
-      new ArticleSlug(slug),
       new ArticleTitle(title),
       new ArticleDescription(description),
       new ArticleTagList(tagList)
@@ -45,11 +41,11 @@ export class ArticleEntity extends Entity {
     tagList: string[]
   ): ArticleEntity {
     return new ArticleEntity(
-      id,
-      new ArticleSlug(slug),
       new ArticleTitle(title),
       new ArticleDescription(description),
-      new ArticleTagList(tagList)
+      new ArticleTagList(tagList),
+      id,
+      new ArticleSlug(slug)
     );
   }
 }

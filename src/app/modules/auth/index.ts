@@ -5,7 +5,6 @@ import { LoginComponent } from './presentation/pages/login/login.component';
 import { RegisterComponent } from './presentation/pages/register/register.component';
 import { GuestGuard } from './presentation/guards/guest.guard';
 import { AuthFacade } from './application/auth.facade';
-import { AuthApplicationService } from './application/auth-application.service';
 import { AuthRepository } from './domain/repository/auth.repository';
 import { AuthHttpRepository } from './infrastructure/http-auth.repository';
 import { provideState } from '@ngrx/store';
@@ -16,20 +15,21 @@ import {
 import { SessionRepository } from './domain/repository/session.repository';
 import { LocalStorageSessionRepository } from './infrastructure/local-storage-session.repository';
 import { inject, provideAppInitializer } from '@angular/core';
-import { EMPTY, map, of, switchMap } from 'rxjs';
+import { EMPTY } from 'rxjs';
+import { LoginUseCase } from './application/use-cases/login.use-case';
+import { MeUseCase } from './application/use-cases/me.use-case';
+import { SetUserUseCase } from './application/use-cases/set-user.use-case';
 
 export const appInitializer = () => {
-  const authFacade = inject(AuthFacade);
-  const $user = authFacade.$user;
-
-  return $user.pipe(switchMap(async () => authFacade.me()));
+  const token = inject(SessionRepository).getToken();
+  const meUseCase = inject(MeUseCase);
+  return token ? meUseCase.execute() : EMPTY;
 };
 
 export const provieAuth = () => [
   AuthFacade,
   provideEffects([AuthEffects]),
   provideState(authFeatureKey, authReducer),
-  AuthApplicationService,
   {
     provide: AuthRepository,
     useClass: AuthHttpRepository,
@@ -38,6 +38,9 @@ export const provieAuth = () => [
     provide: SessionRepository,
     useClass: LocalStorageSessionRepository,
   },
+  LoginUseCase,
+  MeUseCase,
+  SetUserUseCase,
 
   provideAppInitializer(appInitializer),
 ];

@@ -17,7 +17,7 @@ export class UserEntity extends Entity {
   }
 
   public constructor(
-    public readonly id: string,
+    public readonly id: number,
     public readonly email: UserEmail,
     public readonly bio: UserBio,
     public readonly image: UserImage,
@@ -28,7 +28,7 @@ export class UserEntity extends Entity {
   }
 
   public static create(
-    id: string,
+    id: number,
     email: string,
     bio: string,
     image: string,
@@ -46,7 +46,7 @@ export class UserEntity extends Entity {
   }
 
   public static reconstitute(
-    id: string,
+    id: number,
     email: string,
     bio: string,
     image: string,

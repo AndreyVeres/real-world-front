@@ -1,6 +1,11 @@
 import { Observable } from 'rxjs';
-import { MultipleArticleResponse } from '../../application/dto/article.dto';
+import {
+  CreateArticleDto,
+  MultipleArticleResponse,
+  SingleArticleResponse,
+} from '../../application/dto/article.dto';
 
 export abstract class ArticleRepository {
   public abstract getAll(): Observable<MultipleArticleResponse>;
+  public abstract create(articleDto: CreateArticleDto): Observable<SingleArticleResponse>;
 }

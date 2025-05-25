@@ -5,6 +5,7 @@ import {
   selectAllArticles,
   selectArticlesLoading,
 } from '../presentation/store/selectors/article.selectors';
+import { CreateArticleDto } from './dto/article.dto';
 
 @Injectable()
 export class ArticleFacade {
@@ -14,5 +15,9 @@ export class ArticleFacade {
 
   public loadAllArticles(): void {
     this.store.dispatch(ArticlePageActions.loadAllArticles());
+  }
+
+  public create(articleDto: CreateArticleDto): void {
+    this.store.dispatch(ArticlePageActions.createArticle({ articleDto }));
   }
 }

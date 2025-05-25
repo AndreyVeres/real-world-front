@@ -1,23 +1,21 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
-  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-// import { ArticleService } from '@features/create-article/model/article.service';
+import { ArticleFacade } from '@app/modules/article/application/article.facade';
 
 @Component({
   selector: 'app-create-article',
   templateUrl: './create-article.component.html',
   standalone: true,
   imports: [ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateArticleComponent {
-  // private readonly articleService = inject(ArticleService);
-  $destroyRef = inject(DestroyRef);
+  private readonly articlesFacade = inject(ArticleFacade);
 
   form = new FormGroup({
     title: new FormControl('', {
@@ -32,19 +30,9 @@ export class CreateArticleComponent {
       nonNullable: true,
       validators: Validators.required,
     }),
-    // tagList: new FormArray([]),
   });
 
-  getAll() {
-    // return this.articleService.getAll().subscribe();
-  }
-
   handleSubmit() {
-    // const payload = this.form.getRawValue();
-
-    // this.articleService
-    //   .createArticle(payload)
-    //   .pipe(takeUntilDestroyed(this.$destroyRef))
-    //   .subscribe();
+    // this.articlesFacade.create()
   }
 }

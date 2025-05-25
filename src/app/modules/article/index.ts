@@ -13,6 +13,8 @@ import {
   articleFeatureKey,
   articleReducer,
 } from './presentation/store/reducers/article.reducer';
+import { CreateArticleUseCase } from './application/use-cases/create-aritcle.use-case';
+import { EditorComponent } from './presentation/pages/editor/editor.component';
 
 export const articleRoutes: Routes = [
   {
@@ -26,11 +28,17 @@ export const articleRoutes: Routes = [
       { provide: ArticleRepository, useClass: ArticleHttpRepository },
       provideEffects(ArticleEffects),
       provideState(articleFeatureKey, articleReducer),
+      CreateArticleUseCase,
     ],
   },
 
   {
     path: 'article/:slug',
     component: ArticleDetailsComponent,
+  },
+  {
+    path: 'editor',
+    component: EditorComponent,
+    providers: [ArticleFacade],
   },
 ];
