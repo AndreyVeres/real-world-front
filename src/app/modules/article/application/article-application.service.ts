@@ -1,16 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ArticleDto } from './dto/article.dto';
 import { ArticleRepository } from '../domain/repository/article.repository';
+import { ArticleEntity } from '../domain/model/article.entity';
+import { MultipleArticleResponse } from './dto/article.dto';
 
 @Injectable()
 export class ArticleApplicationService {
   public constructor(private articleRepository: ArticleRepository) {}
 
-  public fetchAllArticlesForDisplay(): Observable<ArticleDto[]> {
-    return this.articleRepository
-      .getAll()
-      .pipe(map(({ articles }) => articles.map(ArticleDto.fromDomain)));
+  public getAll(): Observable<{
+    articles: ArticleEntity[];
+    articlesCount: number;
+  }> {
+    return this.articleRepository.getAll().pipe(map(this.mapToDomain));
+  }
+
+  private mapToDomain(response: MultipleArticleResponse) {
+    return {
+      ...response,
+      articles: response.articles.map((article) =>
+        ArticleEntity.reconstitute(
+          String(article.id),
+          article.slug,
+          article.title,
+          article.description,
+          article.tagList
+        )
+      ),
+    };
   }
 }

@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 // import { UserService } from '@entities/user';
-import { AuthService } from '@features/auth';
-import { UserService } from '@entities/user';
+// import { UserService } from '@entities/user';
+import { AuthFacade } from '@app/modules/auth/application/auth.facade';
 
 @Component({
   selector: '[appHeader]',
@@ -12,10 +12,9 @@ import { UserService } from '@entities/user';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  $user = inject(UserService).user$;
-  private readonly authService = inject(AuthService);
+  $user = inject(AuthFacade).$user;
 
   handleLogout() {
-    this.authService.removeSession();
+    // this.authService.removeSession();
   }
 }

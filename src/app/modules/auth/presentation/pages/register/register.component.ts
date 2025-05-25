@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../model/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +15,7 @@ import { AuthService } from '../../model/auth.service';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  private readonly authService = inject(AuthService);
+  // private readonly authService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
 
   public form = new FormGroup({
@@ -37,11 +36,11 @@ export class RegisterComponent {
   handleRegister() {
     const registerPayload = this.form.getRawValue();
 
-    this.authService
-      .register({
-        user: registerPayload,
-      })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((res) => console.log(res));
+    // this.authService
+    //   .register({
+    //     user: registerPayload,
+    //   })
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe((res) => console.log(res));
   }
 }

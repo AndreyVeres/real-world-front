@@ -8,7 +8,7 @@ import { ArticleHttpRepository } from './infrastructure/article-http.repository'
 import { provideEffects } from '@ngrx/effects';
 import { ArticleEffects } from './presentation/store/effects/article.effects';
 import { ArticleListResolver } from './presentation/resolvers/article-list.resolver';
-import { provideState, provideStore } from '@ngrx/store';
+import { provideState } from '@ngrx/store';
 import {
   articleFeatureKey,
   articleReducer,
@@ -25,9 +25,6 @@ export const articleRoutes: Routes = [
       ArticleFacade,
       { provide: ArticleRepository, useClass: ArticleHttpRepository },
       provideEffects(ArticleEffects),
-      // provideStore({
-      //   articles: articleReducer,
-      // }),
       provideState(articleFeatureKey, articleReducer),
     ],
   },

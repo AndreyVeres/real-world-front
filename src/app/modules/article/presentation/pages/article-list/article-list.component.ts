@@ -11,11 +11,7 @@ import { ArticleFacade } from '@app/modules/article/application/article.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleListComponent {
-  private articleFacade = inject(ArticleFacade);
 
-  public $articles = this.articleFacade.articles$;
-
-  public constructor() {}
-
-  ngOnInit() {}
+  private readonly articleFacade = inject(ArticleFacade);
+  public readonly $articles = this.articleFacade.articles$;
 }

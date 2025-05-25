@@ -19,8 +19,8 @@ export class ArticleEffects {
     this.actions$.pipe(
       ofType(ArticlePageActions.loadAllArticles),
       mergeMap(() =>
-        this.articleAppService.fetchAllArticlesForDisplay().pipe(
-          map((articles) =>
+        this.articleAppService.getAll().pipe(
+          map(({ articles, articlesCount }) =>
             ArticleApiActions.loadAllArticlesSuccess({ articles })
           ),
           catchError((error) =>

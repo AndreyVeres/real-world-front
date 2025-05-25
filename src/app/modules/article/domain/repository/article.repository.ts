@@ -1,9 +1,6 @@
 import { Observable } from 'rxjs';
-import { ArticleEntity } from '../model/article.entity';
+import { MultipleArticleResponse } from '../../application/dto/article.dto';
 
 export abstract class ArticleRepository {
-  public abstract getAll(): Observable<{
-    articles: ArticleEntity[];
-    articlesCount: number;
-  }>;
+  public abstract getAll(): Observable<MultipleArticleResponse>;
 }

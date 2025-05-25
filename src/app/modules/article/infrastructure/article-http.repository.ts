@@ -1,52 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { API_ROUTES } from '@shared/const/api.routes';
-import { map, Observable } from 'rxjs';
-import { ArticleEntity } from '../domain/model/article.entity';
+import { Observable } from 'rxjs';
 import { ArticleRepository } from '../domain/repository/article.repository';
 import { HttpClient } from '@angular/common/http';
 import { env } from 'env';
-
-interface ArticleInterface {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  tagList: string[];
-}
-
-interface ApiResponse {
-  articles: ArticleInterface[];
-  articlesCount: number;
-}
+import { MultipleArticleResponse } from '../application/dto/article.dto';
 
 @Injectable()
-export class ArticleHttpRepository extends ArticleRepository {
+export class ArticleHttpRepository implements ArticleRepository {
   private readonly http = inject(HttpClient);
 
-  public getAll(): Observable<{
-    articles: ArticleEntity[];
-    articlesCount: number;
-  }> {
-    return this.http
-      .get<ApiResponse>(env.API_PATH + API_ROUTES.ARTICLE)
-      .pipe(map(this.mapToDomain));
-  }
-
-  private mapToDomain(response: {
-    articles: ArticleInterface[];
-    articlesCount: number;
-  }) {
-    return {
-      ...response,
-      articles: response.articles.map((article) =>
-        ArticleEntity.reconstitute(
-          String(article.id),
-          article.slug,
-          article.title,
-          article.description,
-          article.tagList
-        )
-      ),
-    };
+  public getAll(): Observable<MultipleArticleResponse> {
+    return this.http.get<MultipleArticleResponse>(
+      env.API_PATH + API_ROUTES.ARTICLE
+    );
   }
 }

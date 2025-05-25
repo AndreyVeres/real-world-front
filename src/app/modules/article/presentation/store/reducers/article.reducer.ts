@@ -4,23 +4,18 @@ import {
   ArticlePageActions,
   ArticleApiActions,
 } from '../actions/article.actions';
+import { ArticleEntity } from '@app/modules/article/domain/model/article.entity';
 
 export const articleFeatureKey = 'articles';
 
 export interface ArticlesState {
-  articles: ArticleDto[];
-  currentArticle: ArticleDto | null;
-  loadingList: boolean;
-  loadingSingle: boolean;
-  error: any | null;
+  articles: ArticleEntity[];
+  isLoading: boolean;
 }
 
 export const initialState: ArticlesState = {
   articles: [],
-  currentArticle: null,
-  loadingList: false,
-  loadingSingle: false,
-  error: null,
+  isLoading: false,
 };
 
 export const articleReducer = createReducer(
