@@ -37,6 +37,7 @@ export class ArticleEffects {
       ofType(ArticlePageActions.loadAllArticles),
       mergeMap(() =>
         this.articleAppService.getAll().pipe(
+          //TODO:
           map(({ articles, articlesCount }) => ArticleApiActions.loadAllArticlesSuccess({ articles })),
           catchError((error) => of(ArticleApiActions.loadAllArticlesFailure({ error }))),
         ),

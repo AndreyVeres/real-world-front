@@ -8,10 +8,7 @@ import { AuthFacade } from './application/auth.facade';
 import { AuthRepository } from './domain/repository/auth.repository';
 import { AuthHttpRepository } from './infrastructure/http-auth.repository';
 import { provideState } from '@ngrx/store';
-import {
-  authFeatureKey,
-  authReducer,
-} from './presentation/store/reducers/auth.reducer';
+import { authFeatureKey, authReducer } from './presentation/store/reducers/auth.reducer';
 import { SessionRepository } from './domain/repository/session.repository';
 import { LocalStorageSessionRepository } from './infrastructure/local-storage-session.repository';
 import { inject, provideAppInitializer } from '@angular/core';

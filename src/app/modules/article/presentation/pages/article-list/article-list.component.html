@@ -20,33 +20,32 @@
           </ul>
         </div>
 
-        @for (item of ($articles | async); track item.id) {
+        @for (article of ($articles | async); track article.id) {
         <div class="article-preview">
           <div class="article-meta">
             <a href="/profile/eric-simons"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
             <div class="info">
-              <a [routerLink]="'/profile/${item.slug.value}'" class="author">Eric Simons</a>
-              <span class="date">January 20th</span>
+              <a [routerLink]="'/profile/${item.slug.value}'" class="author">{{ article.author?.username}}</a>
+              <span class="date">{{ article.createdAt | date }}</span>
             </div>
             <button class="btn btn-outline-primary btn-sm pull-xs-right">
-              <i class="ion-heart"></i> 29
+              <i class="ion-heart"></i> {{ article.favoritesCount }}
             </button>
           </div>
           <a routerLink="/article/how-to-build-webapps-that-scale" class="preview-link">
-            <h1>{{ item.title.value }}</h1>
-            <p>{{ item.description.value }}</p>
+            <h1>{{ article.title.value }}</h1>
+            <p>{{ article.description.value }}</p>
             <span>Read more...</span>
             <ul class="tag-list">
-              <li class="tag-default tag-pill tag-outline">realworld</li>
-              <li class="tag-default tag-pill tag-outline">implementations</li>
+              @for(tag of article.tagList.getTags(); track tag){
+              <li class="tag-default tag-pill tag-outline">{{ tag}}</li>
+              }
             </ul>
           </a>
         </div>
         } @empty {
         <li>There are no items.</li>
         }
-
-
 
         <ul class="pagination">
           <li class="page-item active">

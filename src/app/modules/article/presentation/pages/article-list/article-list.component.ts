@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { ArticleFacade } from '@app/modules/article/application/article.facade';
 import { PopularTagsComponent } from '../../components/popular-tags/popular-tags.component';
 
 @Component({
   selector: 'app-article-list',
-  imports: [PopularTagsComponent, RouterLink, AsyncPipe],
+  imports: [PopularTagsComponent, RouterLink, AsyncPipe, DatePipe],
   templateUrl: './article-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

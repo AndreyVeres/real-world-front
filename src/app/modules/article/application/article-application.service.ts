@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { ArticleRepository } from '../domain/repository/article.repository';
 import { ArticleEntity } from '../domain/model/article.entity';
 import { MultipleArticleResponse } from './dto/article.dto';
+import { ArticleMapper } from '../infrastructure/article.mapper';
 
 @Injectable()
 export class ArticleApplicationService {
@@ -23,9 +24,7 @@ export class ArticleApplicationService {
   private mapToDomain(response: MultipleArticleResponse) {
     return {
       ...response,
-      articles: response.articles.map((article) =>
-        ArticleEntity.reconstitute(String(article.id), article.slug, article.title, article.description, article.tagList),
-      ),
+      articles: response.articles.map((article) => ArticleMapper.toEntity(article)),
     };
   }
 }

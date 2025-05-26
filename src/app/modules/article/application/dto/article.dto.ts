@@ -1,9 +1,18 @@
+import { UserDto } from '@app/modules/auth/application/dto/user.dto';
+
 export interface ArticleDto {
   readonly id: string;
   readonly slug: string;
   readonly title: string;
   readonly description: string;
   readonly tagList: string[];
+
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly favorited: boolean;
+  readonly favoritesCount: number;
+
+  readonly author: Omit<UserDto, 'token'>;
 }
 export interface MultipleArticleResponse {
   readonly articles: ArticleDto[];
