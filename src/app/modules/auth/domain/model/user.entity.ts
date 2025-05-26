@@ -16,13 +16,17 @@ export class UserEntity extends Entity {
     return this._token;
   }
 
+  public get username() {
+    return this._username.value;
+  }
+
   public constructor(
     public readonly id: number,
     public readonly email: UserEmail,
     public readonly bio: UserBio,
     public readonly image: UserImage,
-    public readonly _token: UserToken,
-    public readonly username: UserName
+    private readonly _token: UserToken,
+    private readonly _username: UserName
   ) {
     super();
   }

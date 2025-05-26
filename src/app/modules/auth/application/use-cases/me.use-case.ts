@@ -1,18 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AuthRepository } from '../../domain/repository/auth.repository';
-import { UserDto } from '../dto/user.dto';
-import { SetUserUseCase } from './set-user.use-case';
+import { UserEntity } from '../../domain/model/user.entity';
+import { UserMapper } from '../../infrastructure/user.mapper';
+import { AuthFacade } from '../auth.facade';
 
 @Injectable()
 export class MeUseCase {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private readonly authRepository = inject(AuthRepository);
+  private readonly authFacade = inject(AuthFacade);
 
-  private readonly setUserUseCase = inject(SetUserUseCase);
-
-  public execute(): Observable<{ user: UserDto }> {
-    return this.authRepository
-      .me()
-      .pipe(tap(({ user }) => this.setUserUseCase.execute(user)));
+  public execute(): Observable<UserEntity> {
+    return this.authRepository.me().pipe(
+      map(({ user }) => UserMapper.toEntity(user)),
+      tap((user) => this.authFacade.setUser(user))
+    );
   }
 }

@@ -1,6 +1,6 @@
 export interface LoginDto {
-  user: {
-    username: string;
-    password: string;
+  readonly user: {
+    readonly username: string;
+    readonly password: string;
   };
 }

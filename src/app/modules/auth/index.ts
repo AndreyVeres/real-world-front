@@ -18,7 +18,6 @@ import { inject, provideAppInitializer } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { MeUseCase } from './application/use-cases/me.use-case';
-import { SetUserUseCase } from './application/use-cases/set-user.use-case';
 
 export const appInitializer = () => {
   const token = inject(SessionRepository).getToken();
@@ -40,8 +39,6 @@ export const provieAuth = () => [
   },
   LoginUseCase,
   MeUseCase,
-  SetUserUseCase,
-
   provideAppInitializer(appInitializer),
 ];
 

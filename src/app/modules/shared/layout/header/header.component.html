@@ -35,13 +35,13 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="profile/eric-simons">
             <img src="" class="user-pic" />
-            Eric Simons
+            {{ user.username }}
           </a>
         </li>
       </ul>
 
       <button (click)="handleLogout()">Log out</button>
-      <span>{{ user.username.value }}</span>
+      <!-- <span>{{ user.username}}</span> -->
       }
     </ul>
   </div>

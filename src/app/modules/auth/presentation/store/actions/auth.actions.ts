@@ -14,6 +14,6 @@ export const AuthApiActions = createActionGroup({
 export const AuthPageActions = createActionGroup({
   source: 'Auth Page',
   events: {
-    setUser: props<{ user: UserEntity }>(),
+    setUser: props<{ user: UserEntity | null }>(),
   },
 });

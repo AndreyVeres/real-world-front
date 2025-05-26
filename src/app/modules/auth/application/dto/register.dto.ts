@@ -1,7 +1,7 @@
 export interface RegisterDto {
-  user: {
-    email: string;
-    password: string;
-    username: string;
+  readonly user: {
+    readonly email: string;
+    readonly password: string;
+    readonly username: string;
   };
 }

@@ -1,12 +1,10 @@
 import { inject } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
   CanActivateFn,
   Router,
-  RouterStateSnapshot,
 } from '@angular/router';
 import { AuthFacade } from '../../application/auth.facade';
-import { firstValueFrom, map, take, tap } from 'rxjs';
+import { map } from 'rxjs';
 
 export const GuestGuard: CanActivateFn = () => {
   const $isLogged = inject(AuthFacade).$isLoggedIn;

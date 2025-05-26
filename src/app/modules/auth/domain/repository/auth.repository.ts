@@ -6,5 +6,5 @@ import { UserResponse } from '../../infrastructure/http-auth.repository';
 export abstract class AuthRepository {
   public abstract register(payload: RegisterDto): Observable<UserResponse>;
   public abstract login(payload: LoginDto): Observable<UserResponse>;
-  public abstract me(): Observable<any>;
+  public abstract me(): Observable<UserResponse>;
 }

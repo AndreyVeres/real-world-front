@@ -6,6 +6,7 @@ const TOKEN_KEY = 'auth_app_token';
 
 @Injectable()
 export class LocalStorageSessionRepository extends SessionRepository {
+
   saveToken(token: UserToken): void {
     localStorage.setItem(TOKEN_KEY, token.value);
   }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { TagsService } from '../model/tags.service';
 import { AsyncPipe } from '@angular/common';
 import { tap } from 'rxjs';
+import { ArticleRepository } from '@app/modules/article/domain/repository/article.repository';
 
 @Component({
   selector: 'app-popular-tags',
@@ -10,6 +10,6 @@ import { tap } from 'rxjs';
   imports: [AsyncPipe],
 })
 export class PopularTagsComponent {
-  private readonly tagsService = inject(TagsService);
-  $popularTags = this.tagsService.getAllTags();
+  private readonly tagsService = inject(ArticleRepository);
+  $popularTags = this.tagsService.getPopularTags();
 }

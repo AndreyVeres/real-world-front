@@ -5,20 +5,14 @@ import {
 } from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { profileRoute } from '@pages/profile';
-import { settingsRoute } from '@pages/settings';
+
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideStore } from '@ngrx/store';
 import { articleRoutes } from './modules/article';
 import { authRoutes, provieAuth } from './modules/auth';
 import { JwtInterceptor } from './modules/auth/presentation/interceptors/jwt.interceptor';
 
-export const routes: Routes = [
-  profileRoute,
-  ...articleRoutes,
-  ...authRoutes,
-  settingsRoute,
-];
+export const routes: Routes = [...articleRoutes, ...authRoutes];
 
 export const appConfig: ApplicationConfig = {
   providers: [

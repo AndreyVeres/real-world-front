@@ -3,7 +3,7 @@ import { AuthRepository } from '../domain/repository/auth.repository';
 import { HttpClient } from '@angular/common/http';
 import { LoginDto } from '../application/dto/login.dto';
 import { RegisterDto } from '../application/dto/register.dto';
-import { API_ROUTES } from '@shared/const/api.routes';
+import { API_ROUTES } from '@app/modules/shared/const/api.routes';
 import { env } from 'env';
 import { UserDto } from '../application/dto/user.dto';
 import { Observable } from 'rxjs';

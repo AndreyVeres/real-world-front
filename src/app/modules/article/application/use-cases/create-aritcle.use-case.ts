@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ArticleRepository } from '../../domain/repository/article.repository';
 import { CreateArticleDto } from '../dto/article.dto';
@@ -24,7 +24,6 @@ export class CreateArticleUseCase {
           return articleEntity;
         }),
         catchError((error) => {
-          // Здесь можно добавить специфическую обработку ошибок для Use Case
           console.error(
             'Error in CreateTodoUseCase during repository call:',
             error
@@ -35,7 +34,6 @@ export class CreateArticleUseCase {
         })
       );
     } catch (domainError: any) {
-      // Ошибка валидации при создании TodoEntity или его VO (например, слишком короткий title)
       console.error(
         'Domain validation error in CreateTodoUseCase:',
         domainError.message

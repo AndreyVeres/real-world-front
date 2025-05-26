@@ -1,18 +1,20 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AuthRepository } from '../../domain/repository/auth.repository';
 import { LoginDto } from '../dto/login.dto';
-import { UserResponse } from '../../infrastructure/http-auth.repository';
-import { SetUserUseCase } from './set-user.use-case';
+import { UserEntity } from '../../domain/model/user.entity';
+import { UserMapper } from '../../infrastructure/user.mapper';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginUseCase {
   private readonly authRepository = inject(AuthRepository);
-  private readonly setUserUseCase = inject(SetUserUseCase);
+  private readonly router = inject(Router);
 
-  public execute(dto: LoginDto): Observable<UserResponse> {
-    return this.authRepository
-      .login(dto)
-      .pipe(tap(({ user }) => this.setUserUseCase.execute(user)));
+  public execute(dto: LoginDto): Observable<UserEntity> {
+    return this.authRepository.login(dto).pipe(
+      map(({ user }) => UserMapper.toEntity(user)),
+      tap(() => this.router.navigate(['/']))
+    );
   }
 }

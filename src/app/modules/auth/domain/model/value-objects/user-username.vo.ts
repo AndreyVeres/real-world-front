@@ -1,8 +1,6 @@
-import {
-  ValueObject,
-  validateStringNotEmpty,
-  EmptyString,
-} from '@app/modules/shared/uuid';
+import { EmptyString } from '@app/modules/shared/errors/emptyString.error';
+import { ValueObject } from '@app/modules/shared/uuid';
+import { validateStringNotEmpty } from '@app/modules/shared/validators/validators-values';
 
 export class UserName extends ValueObject<string> {
   protected _value: string;

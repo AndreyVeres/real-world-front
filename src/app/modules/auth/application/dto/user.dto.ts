@@ -1,8 +1,8 @@
 export interface UserDto {
-  id: number;
-  email: string;
-  bio: string;
-  image: string;
-  token: string;
-  username: string;
+  readonly id: number;
+  readonly email: string;
+  readonly bio: string;
+  readonly image: string;
+  readonly token: string;
+  readonly username: string;
 }

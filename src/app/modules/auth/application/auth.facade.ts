@@ -22,7 +22,11 @@ export class AuthFacade {
     this.store.dispatch(AuthApiActions.login(loginDto));
   }
 
-  public setUser(user: UserEntity) {
+  public logOut() {
+    this.setUser(null);
+  }
+
+  public setUser(user: UserEntity | null) {
     this.store.dispatch(AuthPageActions.setUser({ user }));
   }
 }

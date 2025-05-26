@@ -16,6 +16,10 @@ export class ArticleApplicationService {
     return this.articleRepository.getAll().pipe(map(this.mapToDomain));
   }
 
+  public getPopularTags() {
+    return this.articleRepository;
+  }
+
   private mapToDomain(response: MultipleArticleResponse) {
     return {
       ...response,
