@@ -13,34 +13,18 @@ export class CreateArticleUseCase {
     try {
       return this.articleRepository.create(dto).pipe(
         map(({ article }) => {
-          const articleEntity = ArticleEntity.reconstitute(
-            article.id,
-            article.slug,
-            article.title,
-            article.description,
-            article.tagList
-          );
+          const articleEntity = ArticleEntity.reconstitute(article.id, article.slug, article.title, article.description, article.tagList);
 
           return articleEntity;
         }),
         catchError((error) => {
-          console.error(
-            'Error in CreateTodoUseCase during repository call:',
-            error
-          );
-          return throwError(
-            () => new Error('Failed to create todo via repository.')
-          );
-        })
+          console.error('Error in CreateTodoUseCase during repository call:', error);
+          return throwError(() => new Error('Failed to create todo via repository.'));
+        }),
       );
     } catch (domainError: any) {
-      console.error(
-        'Domain validation error in CreateTodoUseCase:',
-        domainError.message
-      );
-      return throwError(
-        () => new Error(`Validation failed: ${domainError.message}`)
-      );
+      console.error('Domain validation error in CreateTodoUseCase:', domainError.message);
+      return throwError(() => new Error(`Validation failed: ${domainError.message}`));
     }
   }
 }

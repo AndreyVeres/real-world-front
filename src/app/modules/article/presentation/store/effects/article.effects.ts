@@ -3,30 +3,33 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ArticleApplicationService } from '@app/modules/article/application/article-application.service';
-import {
-  ArticleApiActions,
-  ArticlePageActions,
-} from '../actions/article.actions';
+import { ArticleApiActions, ArticlePageActions } from '../actions/article.actions';
 import { CreateArticleUseCase } from '@app/modules/article/application/use-cases/create-aritcle.use-case';
+import { NotificationService } from '@app/modules/shared/services/notification.service';
 
 @Injectable()
 export class ArticleEffects {
   private readonly actions$ = inject(Actions);
   private readonly articleAppService = inject(ArticleApplicationService);
   private readonly createArticleUseCase = inject(CreateArticleUseCase);
+  private readonly notificationService = inject(NotificationService);
 
   public createArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ArticlePageActions.createArticle),
       mergeMap(({ articleDto }) =>
         this.createArticleUseCase.execute(articleDto).pipe(
-          map((article) => ArticleApiActions.createArticleSuccess({ article })),
-          catchError((error) =>
-            of(ArticleApiActions.loadAllArticlesFailure({ error }))
-          )
-        )
-      )
-    )
+          map((article) => {
+            this.notificationService.success('Article Created');
+            return ArticleApiActions.createArticleSuccess({ article });
+          }),
+          catchError((error) => {
+            this.notificationService.error(error);
+            return of(ArticleApiActions.loadAllArticlesFailure({ error }));
+          }),
+        ),
+      ),
+    ),
   );
 
   public loadAllArticles$ = createEffect(() =>
@@ -34,14 +37,10 @@ export class ArticleEffects {
       ofType(ArticlePageActions.loadAllArticles),
       mergeMap(() =>
         this.articleAppService.getAll().pipe(
-          map(({ articles, articlesCount }) =>
-            ArticleApiActions.loadAllArticlesSuccess({ articles })
-          ),
-          catchError((error) =>
-            of(ArticleApiActions.loadAllArticlesFailure({ error }))
-          )
-        )
-      )
-    )
+          map(({ articles, articlesCount }) => ArticleApiActions.loadAllArticlesSuccess({ articles })),
+          catchError((error) => of(ArticleApiActions.loadAllArticlesFailure({ error }))),
+        ),
+      ),
+    ),
   );
 }

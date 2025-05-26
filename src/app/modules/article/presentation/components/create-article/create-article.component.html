@@ -1,3 +1,19 @@
+<ul class="error-messages">
+
+  @if(fieldHasError('title')){
+  <li>That title is required</li>
+  }
+
+  @if(fieldHasError('description')){
+  <li>That description is required</li>
+  }
+
+  @if(fieldHasError('body')) {
+  <li>That body is required</li>
+  }
+</ul>
+
+
 <form [formGroup]="form" (ngSubmit)="handleSubmit()">
   <fieldset>
     <fieldset class="form-group">
@@ -11,12 +27,20 @@
         placeholder="Write your article (in markdown)"></textarea>
     </fieldset>
     <fieldset class="form-group">
-      <input type="text" class="form-control" placeholder="Enter tags" />
-      <div class="tag-list">
-        <span class="tag-default tag-pill"> <i class="ion-close-round"></i> tag </span>
+      <input #tagInputElementRef formControlName="tag" type="text" class="form-control"
+        placeholder="Enter tags (add with Space, Enter, or Comma)" />
+
+      <div class="tag-list" style="display: flex; flex-wrap: wrap; margin-top: 0.5rem;">
+        @for(tag of (tags$ | async); track tag){
+        <span class="tag-default tag-pill" (click)="removeTag(tag)" style="cursor: pointer;">
+          <i class="ion-close-round"></i>
+          {{tag}}
+        </span>
+        }
       </div>
     </fieldset>
-    <button class="btn btn-lg pull-xs-right btn-primary" type="submit">
+
+    <button class="btn btn-lg pull-xs-right btn-primary" type="submit" [disabled]="form.invalid || form.pending">
       Publish Article
     </button>
   </fieldset>

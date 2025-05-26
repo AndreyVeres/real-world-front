@@ -6,6 +6,7 @@ import { AuthApiActions, AuthPageActions } from '../actions/auth.actions';
 import { SessionRepository } from '@app/modules/auth/domain/repository/session.repository';
 import { LoginUseCase } from '@app/modules/auth/application/use-cases/login.use-case';
 import { MeUseCase } from '@app/modules/auth/application/use-cases/me.use-case';
+import { NotificationService } from '@app/modules/shared/services/notification.service';
 
 @Injectable()
 export class AuthEffects {
@@ -13,20 +14,21 @@ export class AuthEffects {
   private readonly loginUseCase = inject(LoginUseCase);
   private readonly meUseCase = inject(MeUseCase);
   private readonly sessionRepository = inject(SessionRepository);
+  private readonly notificationService = inject(NotificationService);
 
   public me$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthApiActions.me),
       mergeMap(() => {
         return this.meUseCase.execute().pipe(
-          map((user) =>
-            AuthPageActions.setUser({
+          map((user) => {
+            return AuthPageActions.setUser({
               user,
-            })
-          ),
-          catchError((error) => of(error))
+            });
+          }),
+          catchError((error) => of(error)),
         );
-      })
+      }),
     );
   });
 
@@ -37,14 +39,15 @@ export class AuthEffects {
         return this.loginUseCase.execute(data).pipe(
           map((user) => {
             this.sessionRepository.saveToken(user.token);
+            this.notificationService.success(`Entered like ${user.username}`);
             return AuthPageActions.setUser({
               user,
             });
           }),
 
-          catchError((error) => of(error))
+          catchError((error) => of(error)),
         );
-      })
+      }),
     );
   });
 }

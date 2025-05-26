@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ArticlePageActions } from '../presentation/store/actions/article.actions';
-import {
-  selectAllArticles,
-  selectArticlesLoading,
-} from '../presentation/store/selectors/article.selectors';
+import { selectAllArticles, selectArticlesLoading } from '../presentation/store/selectors/article.selectors';
 import { CreateArticleDto } from './dto/article.dto';
 
 @Injectable()

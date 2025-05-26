@@ -24,13 +24,7 @@ export class ArticleApplicationService {
     return {
       ...response,
       articles: response.articles.map((article) =>
-        ArticleEntity.reconstitute(
-          String(article.id),
-          article.slug,
-          article.title,
-          article.description,
-          article.tagList
-        )
+        ArticleEntity.reconstitute(String(article.id), article.slug, article.title, article.description, article.tagList),
       ),
     };
   }
