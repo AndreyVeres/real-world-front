@@ -8,10 +8,13 @@ import { CreateArticleDto, MultipleArticleResponse, SingleArticleResponse } from
 
 @Injectable()
 export class ArticleHttpRepository implements ArticleRepository {
+  public getArticleBySlug(slug: string): Observable<SingleArticleResponse> {
+    return this.http.get<SingleArticleResponse>(env.API_PATH + API_ROUTES.ARTICLE.replace(':slug', slug));
+  }
   private readonly http = inject(HttpClient);
 
   public getAll(): Observable<MultipleArticleResponse> {
-    return this.http.get<MultipleArticleResponse>(env.API_PATH + API_ROUTES.ARTICLE);
+    return this.http.get<MultipleArticleResponse>(env.API_PATH + API_ROUTES.ARTICLES);
   }
 
   public getPopularTags() {

@@ -1,8 +1,6 @@
 import { AuthEffects } from './presentation/store/effects/auth.effects';
 import { provideEffects } from '@ngrx/effects';
 import { Routes } from '@angular/router';
-import { LoginComponent } from './presentation/pages/login/login.component';
-import { RegisterComponent } from './presentation/pages/register/register.component';
 import { GuestGuard } from './presentation/guards/guest.guard';
 import { AuthFacade } from './application/auth.facade';
 import { AuthRepository } from './domain/repository/auth.repository';
@@ -42,12 +40,16 @@ export const provieAuth = () => [
 export const authRoutes: Routes = [
   {
     path: 'login',
-    component: LoginComponent,
+    loadComponent: () => import('./presentation/pages/login/login.component').then((mod) => mod.LoginComponent),
     canActivate: [GuestGuard],
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    loadComponent: () => import('./presentation/pages/register/register.component').then((mod) => mod.RegisterComponent),
     canActivate: [GuestGuard],
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./presentation/pages/settings/settings.component').then((mod) => mod.SettingsComponent),
   },
 ];

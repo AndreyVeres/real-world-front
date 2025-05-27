@@ -6,11 +6,11 @@ import { ArticleFacade } from '../../application/article.facade';
 
 @Injectable()
 export class ArticleListResolver implements Resolve<boolean> {
-  public constructor(private articleStoreFacade: ArticleFacade) {}
+  public constructor(private articleFacade: ArticleFacade) {}
 
   public resolve(): Observable<boolean> {
-    return this.articleStoreFacade.isLoading$.pipe(
-      tap((isLoaded) => !isLoaded && this.articleStoreFacade.loadAllArticles()),
+    return this.articleFacade.isLoading$.pipe(
+      tap((isLoaded) => !isLoaded && this.articleFacade.loadAllArticles()),
       take(1)
     );
   }

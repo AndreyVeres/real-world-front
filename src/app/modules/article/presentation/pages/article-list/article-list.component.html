@@ -23,16 +23,16 @@
         @for (article of ($articles | async); track article.id) {
         <div class="article-preview">
           <div class="article-meta">
-            <a href="/profile/eric-simons"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+            <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
             <div class="info">
-              <a [routerLink]="'/profile/${item.slug.value}'" class="author">{{ article.author?.username}}</a>
+              <a [routerLink]="" class="author">{{ article.author?.username}}</a>
               <span class="date">{{ article.createdAt | date }}</span>
             </div>
             <button class="btn btn-outline-primary btn-sm pull-xs-right">
               <i class="ion-heart"></i> {{ article.favoritesCount }}
             </button>
           </div>
-          <a routerLink="/article/how-to-build-webapps-that-scale" class="preview-link">
+          <a [routerLink]="'/article/' + article.slug.value" class="preview-link">
             <h1>{{ article.title.value }}</h1>
             <p>{{ article.description.value }}</p>
             <span>Read more...</span>

@@ -1,11 +1,5 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -15,9 +9,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  // private readonly authService = inject(AuthService);
-  private readonly destroyRef = inject(DestroyRef);
-
   public form = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
@@ -35,12 +26,5 @@ export class RegisterComponent {
 
   handleRegister() {
     const registerPayload = this.form.getRawValue();
-
-    // this.authService
-    //   .register({
-    //     user: registerPayload,
-    //   })
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((res) => console.log(res));
   }
 }

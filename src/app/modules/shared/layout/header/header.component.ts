@@ -11,11 +11,5 @@ import { AuthFacade } from '@app/modules/auth/application/auth.facade';
 })
 export class HeaderComponent {
   private readonly authfacade = inject(AuthFacade);
-  private readonly router = inject(Router);
   $user = this.authfacade.$user;
-
-  handleLogout() {
-    this.authfacade.logOut();
-    this.router.navigate(['/']);
-  }
 }

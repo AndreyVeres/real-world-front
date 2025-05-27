@@ -1,7 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
-import { provideRouter, Routes } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideStore } from '@ngrx/store';
 import { articleRoutes } from './modules/article';
@@ -9,12 +8,10 @@ import { authRoutes, provieAuth } from './modules/auth';
 import { JwtInterceptor } from './modules/auth/presentation/interceptors/jwt.interceptor';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-export const routes: Routes = [...articleRoutes, ...authRoutes];
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter([...articleRoutes, ...authRoutes]),
     provideHttpClient(withInterceptors([JwtInterceptor])),
     provideStore(),
     provideStoreDevtools({
@@ -26,7 +23,5 @@ export const appConfig: ApplicationConfig = {
     }),
     provieAuth(),
     importProvidersFrom(MatSnackBar),
-
-    //  {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
 };

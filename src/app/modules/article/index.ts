@@ -9,20 +9,15 @@ import { provideEffects } from '@ngrx/effects';
 import { ArticleEffects } from './presentation/store/effects/article.effects';
 import { ArticleListResolver } from './presentation/resolvers/article-list.resolver';
 import { provideState } from '@ngrx/store';
-import {
-  articleFeatureKey,
-  articleReducer,
-} from './presentation/store/reducers/article.reducer';
+import { articleFeatureKey, articleReducer } from './presentation/store/reducers/article.reducer';
 import { CreateArticleUseCase } from './application/use-cases/create-aritcle.use-case';
 import { EditorComponent } from './presentation/pages/editor/editor.component';
+import { SingleArticleResolver } from './presentation/resolvers/single-article.resolver';
 
 export const articleRoutes: Routes = [
   {
     path: '',
-    component: ArticleListComponent,
-    resolve: { state: ArticleListResolver },
     providers: [
-      ArticleListResolver,
       ArticleApplicationService,
       ArticleFacade,
       { provide: ArticleRepository, useClass: ArticleHttpRepository },
@@ -30,15 +25,25 @@ export const articleRoutes: Routes = [
       provideState(articleFeatureKey, articleReducer),
       CreateArticleUseCase,
     ],
-  },
+    children: [
+      {
+        path: '',
+        component: ArticleListComponent,
+        resolve: { state: ArticleListResolver },
+        providers: [ArticleListResolver],
+      },
 
-  {
-    path: 'article/:slug',
-    component: ArticleDetailsComponent,
-  },
-  {
-    path: 'editor',
-    component: EditorComponent,
-    providers: [ArticleFacade],
+      {
+        path: 'article/:slug',
+        component: ArticleDetailsComponent,
+        resolve: { state: SingleArticleResolver },
+        providers: [SingleArticleResolver],
+      },
+      {
+        path: 'editor',
+        component: EditorComponent,
+        providers: [ArticleFacade],
+      },
+    ],
   },
 ];
