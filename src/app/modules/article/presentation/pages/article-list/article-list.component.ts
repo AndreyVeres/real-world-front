@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ArticleEntity } from '@app/modules/article/domain/model/article.entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { ArticleFacade } from '@app/modules/article/application/article.facade';
+import { DatePipe } from '@angular/common';
 import { PopularTagsComponent } from '../../components/popular-tags/popular-tags.component';
 
 @Component({
   selector: 'app-article-list',
-  imports: [PopularTagsComponent, RouterLink, AsyncPipe, DatePipe],
+  imports: [PopularTagsComponent, RouterLink, DatePipe],
   templateUrl: './article-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleListComponent {
-  private readonly articleFacade = inject(ArticleFacade);
-  public readonly $articles = this.articleFacade.articles$;
+  @Input({ required: true })
+  public articles!: ArticleEntity[];
 }

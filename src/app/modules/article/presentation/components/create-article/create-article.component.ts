@@ -1,9 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ArticleFacade } from '@app/modules/article/application/article.facade';
 import { CreateArticleDto } from '@app/modules/article/application/dto/article.dto';
+import { CreateArticleUseCase } from '@app/modules/article/application/use-cases/create-aritcle.use-case';
 import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 interface CreateArticleFormControls {
   title: FormControl<string>;
   description: FormControl<string>;
@@ -18,8 +19,9 @@ interface CreateArticleFormControls {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateArticleComponent {
-  private readonly articlesFacade = inject(ArticleFacade);
   public readonly tags$ = new BehaviorSubject<ReadonlySet<string>>(new Set<string>());
+  private readonly createUseCase = inject(CreateArticleUseCase);
+  private readonly destroyRef$ = inject(DestroyRef);
 
   public readonly form = new FormGroup<CreateArticleFormControls>({
     title: new FormControl('', {
@@ -77,7 +79,7 @@ export class CreateArticleComponent {
       tagList: Array.from(this.tags$.value),
     };
 
-    this.articlesFacade.create(payload);
+    this.createUseCase.execute(payload).pipe(takeUntilDestroyed(this.destroyRef$)).subscribe();
   }
 
   public fieldHasError(formKey: keyof CreateArticleFormControls) {

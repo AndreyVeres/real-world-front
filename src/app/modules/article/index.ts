@@ -1,48 +1,41 @@
 import { Routes } from '@angular/router';
 import { ArticleDetailsComponent } from './presentation/pages/article-details/article-details.component';
 import { ArticleListComponent } from './presentation/pages/article-list/article-list.component';
-import { ArticleApplicationService } from './application/article-application.service';
-import { ArticleFacade } from './application/article.facade';
 import { ArticleRepository } from './domain/repository/article.repository';
 import { ArticleHttpRepository } from './infrastructure/article-http.repository';
-import { provideEffects } from '@ngrx/effects';
-import { ArticleEffects } from './presentation/store/effects/article.effects';
 import { ArticleListResolver } from './presentation/resolvers/article-list.resolver';
-import { provideState } from '@ngrx/store';
-import { articleFeatureKey, articleReducer } from './presentation/store/reducers/article.reducer';
 import { CreateArticleUseCase } from './application/use-cases/create-aritcle.use-case';
 import { EditorComponent } from './presentation/pages/editor/editor.component';
+import { GetAllArticlesUseCase } from './application/use-cases/get-all-articles.use-case';
 import { SingleArticleResolver } from './presentation/resolvers/single-article.resolver';
+import { GetSingleArticlesUseCase } from './application/use-cases/get-single-article.use-case';
 
 export const articleRoutes: Routes = [
   {
     path: '',
-    providers: [
-      ArticleApplicationService,
-      ArticleFacade,
-      { provide: ArticleRepository, useClass: ArticleHttpRepository },
-      provideEffects(ArticleEffects),
-      provideState(articleFeatureKey, articleReducer),
-      CreateArticleUseCase,
-    ],
+    providers: [{ provide: ArticleRepository, useClass: ArticleHttpRepository }],
     children: [
       {
         path: '',
         component: ArticleListComponent,
-        resolve: { state: ArticleListResolver },
-        providers: [ArticleListResolver],
+        resolve: {
+          articles: ArticleListResolver,
+        },
+        providers: [ArticleListResolver, GetAllArticlesUseCase],
       },
 
       {
         path: 'article/:slug',
         component: ArticleDetailsComponent,
-        resolve: { state: SingleArticleResolver },
-        providers: [SingleArticleResolver],
+        resolve: {
+          article: SingleArticleResolver,
+        },
+        providers: [GetSingleArticlesUseCase],
       },
       {
         path: 'editor',
         component: EditorComponent,
-        providers: [ArticleFacade],
+        providers: [CreateArticleUseCase],
       },
     ],
   },

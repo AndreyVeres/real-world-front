@@ -1,11 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import {
-  FormGroup,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthFacade } from '@app/modules/auth/application/auth.facade';
 
 @Component({
@@ -17,6 +12,7 @@ import { AuthFacade } from '@app/modules/auth/application/auth.facade';
 export class LoginComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
+  authService: any;
 
   constructor(private readonly authFacade: AuthFacade) {}
 
@@ -35,13 +31,5 @@ export class LoginComponent {
     this.authFacade.login({
       user: this.form.getRawValue(),
     });
-
-    // .pipe(
-    //   switchMap(() => this.authService.me()),
-    //   takeUntilDestroyed(this.destroyRef)
-    // )
-    // .subscribe(() => {
-    //   this.router.navigate([APP_ROUTES.HOME]);
-    // });
   }
 }

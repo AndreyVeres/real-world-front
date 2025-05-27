@@ -1,17 +1,14 @@
 import { Resolve } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
-import { ArticleFacade } from '../../application/article.facade';
+import { GetAllArticlesUseCase } from '../../application/use-cases/get-all-articles.use-case';
+import { ArticleEntity } from '../../domain/model/article.entity';
 
 @Injectable()
-export class ArticleListResolver implements Resolve<boolean> {
-  public constructor(private articleFacade: ArticleFacade) {}
+export class ArticleListResolver implements Resolve<ArticleEntity[]> {
+  private readonly getAllUseCase = inject(GetAllArticlesUseCase);
 
-  public resolve(): Observable<boolean> {
-    return this.articleFacade.isLoading$.pipe(
-      tap((isLoaded) => !isLoaded && this.articleFacade.loadAllArticles()),
-      take(1)
-    );
+  public resolve(): Observable<ArticleEntity[]> {
+    return this.getAllUseCase.execute();
   }
 }

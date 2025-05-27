@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ArticleEntity } from '@app/modules/article/domain/model/article.entity';
 
 @Component({
   selector: 'app-article-details',
@@ -7,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleDetailsComponent {
-  public constructor() {}
+  @Input({ required: true })
+  public readonly article!: ArticleEntity;
 }
